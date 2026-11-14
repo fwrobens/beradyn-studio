@@ -12,7 +12,7 @@ export function ContactForm() {
     setError(null);
     const data = Object.fromEntries(new FormData(e.currentTarget));
     const parsed = projectRequestSchema.safeParse(data);
-    if (!parsed.success) return setError(parsed.error.issues[0].message);
+    if (!parsed.success) return setError(parsed.error.issues[0]?.message ?? "Please check the form");
     setStatus("sending");
     const v = parsed.data;
     const { error } = await supabase.from("project_requests").insert({
