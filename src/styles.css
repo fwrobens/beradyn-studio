@@ -117,10 +117,24 @@
 }
 @utility reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
-  &.in { opacity: 1; transform: none; }
+  transform: translateY(36px) scale(.98);
+  filter: blur(8px);
+  transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), filter .9s ease;
+  &.in { opacity: 1; transform: none; filter: none; }
 }
+@utility logo-intro { animation: logo-in 1.4s cubic-bezier(.2,.7,.2,1) both, logo-glow 4s ease-in-out 1.4s infinite; }
+@keyframes logo-in { from { opacity: 0; transform: scale(.6) rotate(-12deg); filter: blur(12px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes logo-glow { 0%,100% { filter: drop-shadow(0 0 18px var(--accent)); transform: translateY(0); } 50% { filter: drop-shadow(0 0 42px var(--accent)); transform: translateY(-8px); } }
+@utility glass-shimmer {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: color-mix(in oklab, var(--primary) 18%, transparent);
+  border: 1px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--foreground) 18%, transparent), 0 0 24px color-mix(in oklab, var(--accent) 30%, transparent);
+  &::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(110deg, transparent 30%, color-mix(in oklab, var(--foreground) 35%, transparent) 50%, transparent 70%); transform: translateX(-120%); animation: shimmer 3.2s ease-in-out infinite; }
+  &:hover { box-shadow: inset 0 1px 0 color-mix(in oklab, var(--foreground) 25%, transparent), 0 0 36px color-mix(in oklab, var(--accent) 55%, transparent); }
+}
+@keyframes shimmer { 0%,40% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
 @utility float-slow { animation: float 7s ease-in-out infinite; }
 @utility spin-slow { animation: spin 40s linear infinite; }
 @utility field {
@@ -174,5 +188,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .reveal { opacity: 1; transform: none; }
+  .reveal { opacity: 1; transform: none; filter: none; }
+  .logo-intro, .glass-shimmer::before { animation: none; }
 }

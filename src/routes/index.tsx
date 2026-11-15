@@ -5,6 +5,12 @@ import mark from "@/assets/beradyn-logo-mark.png.asset.json";
 import fullLogo from "@/assets/beradyn-logo-full.png.asset.json";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
+import { GlassShimmerButton } from "@/components/GlassShimmerButton";
+
+// Replace url with each live client site you build.
+const projects = [
+  { name: "BERADYN demo site", type: "Restaurant website", url: "https://beradyn-redesign-preview-preview-458be9ec.up.railway.app/" },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -90,8 +96,8 @@ function Index() {
       {/* Hero */}
       <section className="relative pt-20">
         <div className="relative mx-auto max-w-7xl">
-          <div className="relative z-10 flex min-h-[min(760px,82svh)] flex-col items-center justify-center px-5 py-16 text-center">
-            <img src={mark.url} alt="" className="reveal mb-8 h-20 w-auto drop-shadow-[0_0_40px_var(--accent)] sm:h-24" />
+          <div className="relative z-10 flex min-h-[min(760px,82svh)] flex-col items-center justify-center px-6 py-14 text-center">
+            <img src={mark.url} alt="" className="logo-intro mb-8 h-20 w-auto sm:h-24" />
             <span className="reveal font-mono text-xs text-muted-foreground">
               The BERADYN digital studio
             </span>
@@ -102,7 +108,7 @@ function Index() {
               Studio-quality websites for food trucks, restaurants and local businesses — without the agency overcharge.
             </p>
             <div className="reveal mt-9 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row">
-              <Button asChild className="h-12 w-full px-7 sm:w-auto"><a href="#contact">Start your project <ArrowUpRight /></a></Button>
+              <GlassShimmerButton href="#contact" className="w-full sm:w-auto">Start your project <ArrowUpRight className="h-4 w-4" /></GlassShimmerButton>
               <Button asChild variant="ghost" className="h-12 w-full px-7 sm:w-auto"><a href="#work">Explore our work <ArrowUpRight /></a></Button>
             </div>
           </div>
@@ -118,7 +124,7 @@ function Index() {
       </section>
 
       {/* Solutions */}
-      <section id="solutions" className="mx-auto max-w-6xl px-5 py-28">
+      <section id="solutions" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <div className="reveal max-w-2xl">
           <p className="eyebrow">What we do</p>
           <h2 className="mt-4 text-3xl font-medium sm:text-5xl">Everything your website needs. Nothing it doesn’t.</h2>
@@ -141,39 +147,34 @@ function Index() {
       </section>
 
       {/* Work */}
-      <section id="work" className="mx-auto max-w-6xl px-5 py-20">
+      <section id="work" className="mx-auto max-w-6xl px-6 py-16 md:py-20">
         <div className="reveal flex items-end justify-between gap-6">
           <div>
             <p className="eyebrow">Featured project</p>
             <h2 className="mt-4 text-3xl font-medium sm:text-5xl">See what we build.</h2>
           </div>
         </div>
-        <div className="reveal mt-12 grid items-center gap-10 border-y border-border py-10 md:grid-cols-2">
-          <div className="relative min-h-[320px] px-0 py-6 sm:px-6">
-            <div className="relative mx-auto mt-6 w-full max-w-sm border-y border-border py-5 float-slow">
-              <div className="flex items-center justify-between">
-                <span className="font-display text-lg font-semibold tracking-[0.2em]">NOVA GRILL</span>
+        <div className="mt-12 space-y-16">
+          {projects.map((p) => (
+            <article key={p.url} className="reveal">
+              <div className="overflow-hidden rounded-2xl border border-border shadow-[0_0_60px_-20px_var(--accent)]">
+                <div className="flex items-center gap-2 border-b border-border bg-secondary/60 px-4 py-2.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/40" /><span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/40" /><span className="h-2.5 w-2.5 rounded-full bg-muted-foreground/40" />
+                  <span className="ml-3 min-w-0 truncate font-mono text-xs text-muted-foreground">{p.url.replace(/^https?:\/\//, "")}</span>
+                </div>
+                <iframe src={p.url} title={`${p.name} live preview`} loading="lazy" className="block h-[520px] w-full bg-background md:h-[640px]" />
               </div>
-              {[["Smash Burger", "$12"], ["Street Tacos", "$9"], ["Loaded Fries", "$7"]].map(([a, b]) => (
-                <div key={a} className="mt-4 flex items-center justify-between border-t pt-4 text-sm"><span>{a}</span><span className="font-mono text-muted-foreground">{b}</span></div>
-              ))}
-              <div className="mt-5 rounded-full bg-primary py-2.5 text-center text-xs font-semibold text-primary-foreground">Order now</div>
-            </div>
-          </div>
-          <div className="flex flex-col justify-center">
-            <p className="font-mono text-xs text-muted-foreground">01 / Restaurant website</p>
-            <h3 className="mt-3 text-2xl font-medium sm:text-3xl">A restaurant site with a menu that stays current.</h3>
-            <p className="mt-4 text-muted-foreground">Menu presentation, pricing, availability and content updates — all managed with BERADYN’s tools.</p>
-            <ul className="mt-6 space-y-2.5 text-sm">
-              {["Live menu & pricing", "Mobile ordering links", "Hours & location"].map((x) => <li key={x} className="flex items-center gap-2.5"><Check className="h-4 w-4 text-accent" />{x}</li>)}
-            </ul>
-            <p className="mt-6 text-xs text-muted-foreground/70">BERADYN demonstration project — not a paid client reference.</p>
-          </div>
+              <div className="mt-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+                <div className="min-w-0"><p className="font-mono text-xs text-muted-foreground">{p.type}</p><h3 className="mt-1 truncate text-xl font-medium">{p.name}</h3></div>
+                <Button asChild variant="ghost" className="shrink-0"><a href={p.url} target="_blank" rel="noreferrer">Visit <ArrowUpRight /></a></Button>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
       {/* Process */}
-      <section id="process" className="mx-auto max-w-6xl px-5 py-28">
+      <section id="process" className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <div className="reveal max-w-2xl">
           <p className="eyebrow">How it works</p>
           <h2 className="mt-4 text-3xl font-medium sm:text-5xl">From your first idea to launch.</h2>
@@ -196,7 +197,7 @@ function Index() {
 
       {/* Contact */}
       <section id="contact" className="border-t border-border py-24">
-        <div className="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div className="reveal">
             <p className="eyebrow">Start here</p>
             <h2 className="mt-4 text-3xl font-medium sm:text-5xl">Let’s build your next step.</h2>
@@ -208,9 +209,9 @@ function Index() {
 
       {/* Footer */}
       <footer className="border-t">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <img src={fullLogo.url} alt="BERADYN — Digital experiences built for growth" className="h-28 w-auto" />
+            <img src={fullLogo.url} alt="BERADYN — Digital experiences built for growth" className="-ml-2 h-20 w-auto md:h-28" />
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">Professional websites. Practical tools. Built for your business.</p>
           </div>
           <div>
@@ -222,7 +223,7 @@ function Index() {
             <ul className="mt-4 space-y-2 text-sm text-muted-foreground"><li>Web design</li><li>Website management</li><li>Hosting & maintenance</li></ul>
           </div>
         </div>
-        <p className="border-t py-6 text-center text-xs text-muted-foreground">© {new Date().getFullYear()} BERADYN. All rights reserved.</p>
+        <p className="border-t px-6 pb-24 pt-6 md:pb-6 text-center text-xs text-muted-foreground">© {new Date().getFullYear()} BERADYN. All rights reserved.</p>
       </footer>
     </div>
   );
