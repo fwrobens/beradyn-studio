@@ -51,6 +51,8 @@
   --input: oklch(1 0 0 / 12%);
   --ring: oklch(0.62 0.2 258);
   --glow: 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent), 0 0 48px -8px color-mix(in oklab, var(--accent) 70%, transparent);
+  --ambient-background: linear-gradient(115deg, transparent 12%, color-mix(in oklab, var(--accent) 12%, transparent) 36%, transparent 58%, color-mix(in oklab, var(--ice) 5%, transparent) 78%, transparent);
+  --timeline-track: linear-gradient(90deg, var(--accent), color-mix(in oklab, var(--ice) 30%, transparent));
 }
 
 @layer base {
@@ -62,7 +64,8 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.035em; }
+  h1, h2, h3 { font-family: var(--font-display); letter-spacing: 0; }
+  section[id] { scroll-margin-top: 100px; }
   ::selection { background: color-mix(in oklab, var(--accent) 45%, transparent); }
 }
 
@@ -141,6 +144,33 @@
 @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @utility marquee { animation: marquee 30s linear infinite; }
+
+.ambient-trace {
+  background: var(--ambient-background);
+  background-size: 180% 100%;
+  animation: atmosphere 20s ease-in-out infinite alternate;
+}
+.process-timeline::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--timeline-track);
+}
+.process-number { border: 1px solid var(--accent); border-radius: 50%; }
+@media (min-width: 768px) {
+  .process-timeline::before {
+    left: 0;
+    right: 0;
+    top: 15px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+}
+@keyframes atmosphere { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }

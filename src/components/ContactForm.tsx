@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowUpRight, CheckCircle2, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
 import { BUDGETS, NEEDS, TIMELINES, projectRequestSchema } from "@/lib/project-request";
 
 export function ContactForm() {
@@ -22,7 +23,7 @@ export function ContactForm() {
     });
     if (error) {
       setStatus("idle");
-      return setError("Something went wrong. Please try again or email bandr@beradyn.com.");
+      return setError("Something went wrong. Please try again.");
     }
     setStatus("sent");
   }
@@ -60,9 +61,9 @@ export function ContactForm() {
         <textarea id="message" name="message" rows={5} className="field resize-none" maxLength={2000} placeholder="e.g. We run a taco truck and want customers to see our menu and weekly locations." />
       </div>
       {error && <p className="text-sm text-destructive sm:col-span-2">{error}</p>}
-      <button disabled={status === "sending"} className="group inline-flex items-center justify-center gap-2 rounded-full bg-primary px-7 py-4 text-sm font-semibold text-primary-foreground transition hover:glow disabled:opacity-60 sm:col-span-2 sm:justify-self-start">
+      <Button type="submit" disabled={status === "sending"} className="group h-12 px-7 font-semibold sm:col-span-2 sm:justify-self-start">
         {status === "sending" ? <Loader2 className="h-4 w-4 animate-spin" /> : <>Submit request <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" /></>}
-      </button>
+      </Button>
     </form>
   );
 }

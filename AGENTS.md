@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Page presentation
+- Keep ambient animation in a single fixed, decorative background layer so it remains consistent while scrolling.
+- Use an unframed ordered list with a CSS connector for the process sequence so desktop and mobile share the same accessible content.
